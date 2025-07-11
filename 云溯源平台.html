@@ -1,0 +1,907 @@
+<html lang="zh-CN"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>云溯源平台 - 区块链农产品溯源平台</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #2e7d32;
+            --primary-dark: #1b5e20;
+            --secondary: #8bc34a;
+            --accent: #ff9800;
+            --light: #f5f5f5;
+            --dark: #333;
+            --gray: #757575;
+            --blockchain: #1976d2;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        /* 头部样式 */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo img {
+            height: 50px;
+        }
+        
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        
+        .logo span {
+            color: var(--secondary);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+        }
+        
+        nav a:hover, nav a.active {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .btn {
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+        
+        .btn-outline {
+            border: 2px solid white;
+            color: white;
+            background: transparent;
+        }
+        
+        .btn-outline:hover {
+            background-color: white;
+            color: var(--primary);
+        }
+        
+        .btn-primary {
+            background-color: var(--accent);
+            color: white;
+            border: 2px solid var(--accent);
+        }
+        
+        .btn-primary:hover {
+            background-color: #e65100;
+            border-color: #e65100;
+        }
+        
+        /* 英雄区域 */
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1490814525860-594e82bfd34a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 6rem 2rem;
+            text-align: center;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hero h2 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        /* 特色区域 */
+        .features {
+            padding: 5rem 2rem;
+            background-color: white;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .section-title p {
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .feature-card {
+            background-color: var(--light);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .feature-icon {
+            background-color: var(--primary);
+            color: white;
+            font-size: 2.5rem;
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .feature-content {
+            padding: 2rem;
+        }
+        
+        .feature-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-dark);
+        }
+        
+        /* 溯源展示 */
+        .traceability {
+            padding: 5rem 2rem;
+            background-color: #f0f7ff;
+        }
+        
+        .trace-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 3rem;
+            align-items: center;
+        }
+        
+        .trace-image {
+            flex: 1;
+            min-width: 300px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .trace-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .trace-content {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .trace-content h3 {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+        
+        .trace-content p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .blockchain-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background-color: rgba(25, 118, 210, 0.1);
+            color: var(--blockchain);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-weight: 600;
+            margin-top: 1rem;
+        }
+        
+        /* 产品展示 */
+        .products {
+            padding: 5rem 2rem;
+            background-color: white;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .product-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .product-image {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
+        }
+        
+        .product-content {
+            padding: 1.5rem;
+        }
+        
+        .product-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-dark);
+        }
+        
+        .product-origin {
+            color: var(--accent);
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        
+        .product-description {
+            color: var(--gray);
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+        
+        .trace-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--blockchain);
+            font-weight: 600;
+            text-decoration: none;
+        }
+        
+        /* 社区区域 */
+        .community {
+            padding: 5rem 2rem;
+            background-color: #f8f9fa;
+        }
+        
+        .community-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+        }
+        
+        .community-stories {
+            background-color: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .community-stories h3 {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--light);
+        }
+        
+        .story {
+            display: flex;
+            gap: 1.5rem;
+            padding: 1.5rem 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .story:last-child {
+            border-bottom: none;
+        }
+        
+        .story-image {
+            flex: 0 0 80px;
+            height: 80px;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+        
+        .story-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .story-content h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+        
+        .story-content p {
+            color: var(--gray);
+            font-size: 0.95rem;
+        }
+        
+        .community-forum {
+            background-color: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .community-forum h3 {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--light);
+        }
+        
+        .forum-topics {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .topic {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border-radius: 8px;
+            background-color: var(--light);
+            transition: all 0.3s ease;
+        }
+        
+        .topic:hover {
+            background-color: #e8f5e9;
+            transform: translateX(5px);
+        }
+        
+        .topic-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--secondary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        
+        .topic-content h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.3rem;
+            color: var(--dark);
+        }
+        
+        .topic-meta {
+            display: flex;
+            gap: 1rem;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        /* 合作伙伴 */
+        .partners {
+            padding: 4rem 2rem;
+            background-color: white;
+        }
+        
+        .partners-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 3rem;
+            align-items: center;
+        }
+        
+        .partner-logo {
+            height: 80px;
+            filter: grayscale(100%);
+            opacity: 0.7;
+            transition: all 0.3s ease;
+        }
+        
+        .partner-logo:hover {
+            filter: grayscale(0);
+            opacity: 1;
+            transform: scale(1.05);
+        }
+        
+        /* 底部区域 */
+        footer {
+            background-color: var(--primary-dark);
+            color: white;
+            padding: 4rem 2rem 2rem;
+        }
+        
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+        }
+        
+        .footer-logo {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .footer-logo h3 {
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .footer-logo span {
+            color: var(--secondary);
+        }
+        
+        .footer-logo p {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.8;
+        }
+        
+        .footer-links h4 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .footer-links h4::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--secondary);
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+            transform: translateX(5px);
+        }
+        
+        .footer-contact p {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 1rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            background-color: var(--secondary);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 3rem;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+            
+            nav ul {
+                gap: 1rem;
+            }
+            
+            .hero h2 {
+                font-size: 2.2rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .trace-container {
+                flex-direction: column;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .auth-buttons {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 头部导航 -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <i class="fas fa-seedling"></i>
+                <h1>云溯源<span>平台</span></h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#" class="active">首页</a></li>
+                    <li><a href="#">产品溯源</a></li>
+                    <li><a href="#">溪望社区</a></li>
+                    <li><a href="#">商家合作</a></li>
+                    <li><a href="#">关于我们</a></li>
+                </ul>
+            </nav>
+            <div class="auth-buttons">
+                <a href="#" class="btn btn-outline">登录</a>
+                <a href="注册登陆.html" class="btn btn-primary">注册</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 英雄区域 -->
+    <section class="hero">
+        <div class="hero-content">
+            <h2>区块链技术赋能农产品溯源</h2>
+            <p>云溯源平台利用区块链技术，为每一件农产品建立不可篡改的溯源档案，从田间到餐桌全程透明可追溯，保障食品安全，助力乡村振兴。</p>
+            <div class="hero-buttons">
+                <a href="#" class="btn btn-primary">查看溯源产品</a>
+                <a href="#" class="btn btn-outline">了解区块链溯源</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 特色功能 -->
+    <section class="features">
+        <div class="section-title">
+            <h2>平台核心功能</h2>
+            <p>云溯源平台专注于农产品溯源与社区交流，为消费者提供透明可信的农产品信息</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-link"></i>
+                </div>
+                <div class="feature-content">
+                    <h3>区块链溯源</h3>
+                    <p>利用区块链技术记录农产品从种植、加工到销售的全过程，确保信息不可篡改，全程透明可追溯。</p>
+                </div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="feature-content">
+                    <h3>溪望社区</h3>
+                    <p>分享农产品背后的故事，了解农民的生产过程，交流健康饮食理念，建立消费者与生产者的桥梁。</p>
+                </div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-store"></i>
+                </div>
+                <div class="feature-content">
+                    <h3>商家合作</h3>
+                    <p>为优质农产品供应商提供溯源服务，提升产品信任度，扩大市场影响力，实现助农增收。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 溯源展示 -->
+    <section class="traceability">
+        <div class="trace-container">
+            <div class="trace-image">
+                <img src="https://p9-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/code_assistant/aa7a34e91649402bab56a7b6785fad67~tplv-a9rns2rl98-image.image?rk3s=8e244e95&amp;rrcfp=2609e108&amp;x-expires=1752806437&amp;x-signature=XVJ6tD5LmAb2f6Z%2BHozw5mdpjnM%3D" alt="区块链溯源">
+            </div>
+            <div class="trace-content">
+                <h3>透明可信的溯源系统</h3>
+                <p>云溯源平台采用区块链技术，为每一件农产品创建唯一的数字身份。消费者只需扫描产品包装上的二维码，即可查看产品的完整溯源信息。</p>
+                <p>从种植基地的地理位置、种植方式，到加工过程、质量检测报告，再到物流运输和销售终端，所有信息都被永久记录在区块链上，确保真实可信。</p>
+                <div class="blockchain-badge">
+                    <i class="fas fa-link"></i>
+                    <span>区块链技术保障数据安全</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 产品展示 -->
+    <section class="products">
+        <div class="section-title">
+            <h2>溯源农产品</h2>
+            <p>探索我们平台上的优质溯源农产品，了解它们的前世今生</p>
+        </div>
+        <div class="products-grid">
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://p9-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/code_assistant/94965db812ba409aa492e2a61e25a4b8~tplv-a9rns2rl98-image.image?rk3s=8e244e95&amp;rrcfp=2609e108&amp;x-expires=1752804694&amp;x-signature=s8HOHvNjeGaK%2BGX%2BtgTVtw72Q0k%3D" alt="兴隆山楂">
+                </div>
+                <div class="product-content">
+                    <div class="product-origin">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>河北兴隆</span>
+                    </div>
+                    <h3>兴隆山楂</h3>
+                    <p class="product-description">产自燕山山脉的兴隆山楂，色泽鲜艳，酸甜适口，富含多种维生素和矿物质。</p>
+                    <a href="山楂.html" class="trace-btn">
+                        <i class="fas fa-qrcode"></i>
+                        <span>查看溯源信息</span>
+                    </a>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/code_assistant/9f1da2b4fa914f66a2950c9c6724c80c~tplv-a9rns2rl98-image.image?rk3s=8e244e95&amp;rrcfp=2609e108&amp;x-expires=1752804672&amp;x-signature=rvlaiYTAyUpny40GdxGza1C70B0%3D" alt="赵县雪梨">
+                </div>
+                <div class="product-content">
+                    <div class="product-origin">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>河北赵县</span>
+                    </div>
+                    <h3>赵县雪梨</h3>
+                    <p class="product-description">赵县特产雪梨，果形端正，皮薄肉厚，汁多味甜，有"天下第一梨"的美誉。</p>
+                    <a href="赵县雪梨.html" class="trace-btn">
+                        <i class="fas fa-qrcode"></i>
+                        <span>查看溯源信息</span>
+                    </a>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://p9-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/code_assistant/338f7b4fee7d47c1b13447f70aad279d~tplv-a9rns2rl98-image.image?rk3s=8e244e95&amp;rrcfp=2609e108&amp;x-expires=1752804719&amp;x-signature=g7Kj0hZcjyZRhMRx3DCCZES%2BXig%3D" alt="舞狮馒头">
+                </div>
+                <div class="product-content">
+                    <div class="product-origin">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>河北正定</span>
+                    </div>
+                    <h3>正定舞狮馒头</h3>
+                    <p class="product-description">传承百年工艺的传统面食，造型独特，口感松软，是正定地区的特色美食。</p>
+                    <a href="#" class="trace-btn">
+                        <i class="fas fa-qrcode"></i>
+                        <span>查看溯源信息</span>
+                    </a>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://p9-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/code_assistant/6a6ad4c4a73248b39cde7e1bb99588d2~tplv-a9rns2rl98-image.image?rk3s=8e244e95&amp;rrcfp=2609e108&amp;x-expires=1752804735&amp;x-signature=wSNJlDmpqYrDrl3RVJXW38Q%2BUMM%3D" alt="山楂制品">
+                </div>
+                <div class="product-content">
+                    <div class="product-origin">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>河北兴隆</span>
+                    </div>
+                    <h3>兴隆山楂糕</h3>
+                    <p class="product-description">以兴隆山楂为原料，传统工艺制作，无添加防腐剂和人工色素，酸甜可口。</p>
+                    <a href="#" class="trace-btn">
+                        <i class="fas fa-qrcode"></i>
+                        <span>查看溯源信息</span>
+                    </a>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://p9-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/code_assistant/6addd4fd859543b99c49041fd3e18b22~tplv-a9rns2rl98-image.image?rk3s=8e244e95&amp;rrcfp=2609e108&amp;x-expires=1752804749&amp;x-signature=GDA7qiCeHY6gTFq4MhUgRweY5qI%3D" alt="雪梨制品">
+                </div>
+                <div class="product-content">
+                    <div class="product-origin">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>河北赵县</span>
+                    </div>
+                    <h3>雪梨膏</h3>
+                    <p class="product-description">采用赵县优质雪梨，古法熬制，保留雪梨的天然营养，润肺止咳。</p>
+                    <a href="#" class="trace-btn">
+                        <i class="fas fa-qrcode"></i>
+                        <span>查看溯源信息</span>
+                    </a>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-image">
+                    <img src="https://p9-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/code_assistant/1586e1f6b50948d5a23e20d0ae11be08~tplv-a9rns2rl98-image.image?rk3s=8e244e95&amp;rrcfp=2609e108&amp;x-expires=1752804775&amp;x-signature=Yxw%2FGRrpQyBDNTQYRuDmxmjPgfk%3D" alt="舞狮馒头礼盒">
+                </div>
+                <div class="product-content">
+                    <div class="product-origin">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>河北正定</span>
+                    </div>
+                    <h3>舞狮馒头礼盒</h3>
+                    <p class="product-description">精选优质小麦粉，手工制作，造型精美，是节庆送礼的佳品。</p>
+                    <a href="#" class="trace-btn">
+                        <i class="fas fa-qrcode"></i>
+                        <span>查看溯源信息</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 社区区域 -->
+    <section class="community">
+        <div class="section-title">
+            <h2>溪望社区</h2>
+            <p>分享农产品背后的故事，了解从田间到餐桌的旅程</p>
+        </div>
+        <div class="community-container">
+            <div class="community-stories">
+                <h3>农产品故事</h3>
+                <div class="story">
+                    <div class="story-image">
+                        <img src="https://images.unsplash.com/photo-1568700942090-19dc36fab0c4?ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=200&amp;q=80" alt="山楂种植">
+                    </div>
+                    <div class="story-content">
+                        <h4>燕山深处的山楂红</h4>
+                        <p>兴隆县的山楂种植户王大爷，坚持不打农药，采用物理防虫，种出的山楂酸甜可口...</p>
+                    </div>
+                </div>
+                <div class="story">
+                    <div class="story-image">
+                        <img src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/code_assistant/4bd32ed9290d4b5baf44b6a3e7052d97~tplv-a9rns2rl98-image.image?rk3s=8e244e95&amp;rrcfp=2609e108&amp;x-expires=1752804834&amp;x-signature=%2BEZPnczA3jed6rc97ux43vJTLig%3D" alt="雪梨采摘">
+                    </div>
+                    <div class="story-content">
+                        <h4>赵县雪梨的甜蜜故事</h4>
+                        <p>赵县的梨农李大姐，传承百年种植技艺，每一棵梨树都倾注了她的心血...</p>
+                    </div>
+                </div>
+                <div class="story">
+                    <div class="story-image">
+                        </div></div></div></div></section></body></html>

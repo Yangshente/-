@@ -1,0 +1,967 @@
+<html lang="zh-CN"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>云溯源平台 - 产品溯源详情</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #2e7d32;
+            --primary-dark: #1b5e20;
+            --secondary: #8bc34a;
+            --accent: #ff9800;
+            --light: #f5f5f5;
+            --dark: #333;
+            --gray: #757575;
+            --blockchain: #1976d2;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        /* 头部样式 */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo i {
+            font-size: 2rem;
+        }
+        
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        
+        .logo span {
+            color: var(--secondary);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+        }
+        
+        nav a:hover, nav a.active {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .btn {
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+        
+        .btn-outline {
+            border: 2px solid white;
+            color: white;
+            background: transparent;
+        }
+        
+        .btn-outline:hover {
+            background-color: white;
+            color: var(--primary);
+        }
+        
+        .btn-primary {
+            background-color: var(--accent);
+            color: white;
+            border: 2px solid var(--accent);
+        }
+        
+        .btn-primary:hover {
+            background-color: #e65100;
+            border-color: #e65100;
+        }
+        
+        .btn-blockchain {
+            background-color: var(--blockchain);
+            color: white;
+            border: 2px solid var(--blockchain);
+        }
+        
+        .btn-blockchain:hover {
+            background-color: #0d47a1;
+            border-color: #0d47a1;
+        }
+        
+        /* 主要内容区域 */
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+        
+        /* 面包屑导航 */
+        .breadcrumb {
+            margin-bottom: 1.5rem;
+            color: var(--gray);
+        }
+        
+        .breadcrumb a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+        /* 产品基本信息 */
+        .product-header {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+        }
+        
+        .product-image {
+            flex: 1 1 300px;
+            max-width: 400px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .product-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .product-info {
+            flex: 2 1 400px;
+        }
+        
+        .product-info h2 {
+            font-size: 2rem;
+            color: var(--primary-dark);
+            margin-bottom: 1rem;
+        }
+        
+        .product-origin {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--accent);
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+        
+        .product-id {
+            color: var(--gray);
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+        
+        .product-id span {
+            font-family: monospace;
+            color: var(--dark);
+        }
+        
+        .product-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background-color: rgba(46, 125, 50, 0.1);
+            color: var(--primary);
+            padding: 0.3rem 1rem;
+            border-radius: 50px;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+        
+        .product-status i {
+            color: var(--secondary);
+        }
+        
+        .product-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        /* 溯源时间线 */
+        .trace-timeline {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+        }
+        
+        .trace-timeline h3 {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 2rem;
+        }
+        
+        .timeline {
+            position: relative;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background-color: var(--light);
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2rem;
+            padding-left: 3rem;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 8px;
+            top: 5px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background-color: var(--blockchain);
+            z-index: 1;
+        }
+        
+        .timeline-date {
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-bottom: 0.3rem;
+        }
+        
+        .timeline-content {
+            background-color: var(--light);
+            padding: 1rem;
+            border-radius: 6px;
+        }
+        
+        .timeline-content h4 {
+            color: var(--primary-dark);
+            margin-bottom: 0.5rem;
+        }
+        
+        .timeline-content p {
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+        }
+        
+        .timeline-content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 6px;
+            margin-top: 0.5rem;
+        }
+        
+        /* 产品检测报告 */
+        .product-reports {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+        }
+        
+        .product-reports h3 {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 2rem;
+        }
+        
+        .reports-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .report-card {
+            border: 1px solid var(--light);
+            border-radius: 6px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .report-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .report-header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem;
+        }
+        
+        .report-content {
+            padding: 1rem;
+        }
+        
+        .report-content p {
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+        
+        .report-date {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        /* 产品详情与认证 */
+        .product-details {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .product-description {
+            flex: 1 1 500px;
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .product-description h3 {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+        
+        .product-certifications {
+            flex: 1 1 300px;
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .product-certifications h3 {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+        
+        .certification {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .certification-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: var(--light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+        
+        .certification-info h4 {
+            color: var(--primary-dark);
+        }
+        
+        .certification-info p {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        /* 推荐产品 */
+        .recommended-products {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+        }
+        
+        .recommended-products h3 {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .product-card {
+            border: 1px solid var(--light);
+            border-radius: 6px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .product-card-image {
+            height: 180px;
+            overflow: hidden;
+        }
+        
+        .product-card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .product-card-content {
+            padding: 1rem;
+        }
+        
+        .product-card-content h4 {
+            color: var(--primary-dark);
+            margin-bottom: 0.5rem;
+        }
+        
+        .product-card-origin {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            color: var(--accent);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        
+        .product-card-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        /* 底部区域 */
+        footer {
+            background-color: var(--primary-dark);
+            color: white;
+            padding: 4rem 2rem 2rem;
+        }
+        
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+        }
+        
+        .footer-logo {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .footer-logo h3 {
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .footer-logo span {
+            color: var(--secondary);
+        }
+        
+        .footer-logo p {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.8;
+        }
+        
+        .footer-links h4 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .footer-links h4::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--secondary);
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+            transform: translateX(5px);
+        }
+        
+        .footer-contact p {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 1rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            background-color: var(--secondary);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 3rem;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+        
+        /* 二维码扫描区域 */
+        .qr-scan {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1566385101042-1a0ca0a8d082?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .qr-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .qr-container h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .qr-container p {
+            margin-bottom: 2rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .qr-box {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            display: inline-block;
+            margin-bottom: 2rem;
+        }
+        
+        .qr-code {
+            width: 200px;
+            height: 200px;
+            background-color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+        }
+        
+        .qr-code img {
+            max-width: 100%;
+        }
+        
+        .scan-actions {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+        
+        /* 溯源地图 */
+        .trace-map {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+        }
+        
+        .trace-map h3 {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+        
+        .map-container {
+            height: 400px;
+            background-color: var(--light);
+            border-radius: 6px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        /* 溯源批次查询 */
+        .batch-search {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+        }
+        
+        .batch-search h3 {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+        
+        .search-form {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .search-input {
+            flex: 1 1 300px;
+            padding: 0.7rem 1rem;
+            border: 1px solid var(--light);
+            border-radius: 50px;
+            outline: none;
+        }
+        
+        .search-input:focus {
+            border-color: var(--primary);
+        }
+        
+        .batch-results {
+            margin-top: 2rem;
+        }
+        
+        .batch-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .batch-table th, .batch-table td {
+            padding: 0.8rem;
+            border-bottom: 1px solid var(--light);
+            text-align: left;
+        }
+        
+        .batch-table th {
+            color: var(--primary-dark);
+            font-weight: 600;
+        }
+        
+        .batch-table tr:hover {
+            background-color: var(--light);
+        }
+        
+        /* 溯源统计 */
+        .trace-stats {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+        }
+        
+        .trace-stats h3 {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .stat-card {
+            background-color: var(--light);
+            padding: 1.5rem;
+            border-radius: 6px;
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            color: var(--gray);
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+            
+            nav ul {
+                gap: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .auth-buttons {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .product-header, .product-details {
+                flex-direction: column;
+            }
+            
+            .product-image {
+                max-width: 100%;
+            }
+            
+            .qr-container h2 {
+                font-size: 2rem;
+            }
+            
+            .map-container {
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 头部导航 -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <i class="fas fa-seedling"></i>
+                <h1>云溯源<span>平台</span></h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#" class="active">首页</a></li>
+                    <li><a href="#">产品溯源</a></li>
+                    <li><a href="#">溪望社区</a></li>
+                    <li><a href="#">商家合作</a></li>
+                    <li><a href="#">关于我们</a></li>
+                </ul>
+            </nav>
+            <div class="auth-buttons">
+                <a href="#" class="btn btn-outline">登录</a>
+                <a href="#" class="btn btn-primary">注册</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 主要内容区域 -->
+    <main>
+        <!-- 面包屑导航 -->
+        <div class="breadcrumb">
+            <a href="#">首页</a> &gt; <a href="#">产品溯源</a> &gt; 赵县雪梨
+        </div>
+
+        <!-- 产品基本信息 -->
+        <div class="product-header">
+            <div class="product-image">
+                <img src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/code_assistant/76a0618344734dd5960159dc0a4cc2f1~tplv-a9rns2rl98-image.image?rk3s=8e244e95&amp;rrcfp=2609e108&amp;x-expires=1752808538&amp;x-signature=A9VZCDgdoW2UZ2i09%2BLfV9ZJMIg%3D" alt="赵县雪梨">
+            </div>
+            <div class="product-info">
+                <h2>赵县雪梨</h2>
+                <div class="product-origin">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>河北赵县</span>
+                </div>
+                <div class="product-id">
+                    <span>产品溯源码: ZX20230516001</span>
+                </div>
+                <div class="product-status">
+                    <i class="fas fa-check-circle"></i>
+                    <span>地理标志保护产品</span>
+                </div>
+                <div class="product-actions">
+                    <a href="#" class="btn btn-blockchain">
+                        <i class="fas fa-qrcode"></i>
+                        查看区块链存证
+                    </a>
+                    <a href="#" class="btn btn-primary">
+                        <i class="fas fa-shopping-cart"></i>
+                        加入购物车
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 溯源时间线 -->
+        <div class="trace-timeline">
+            <h3>产品溯源历程</h3>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-date">2023-03-10</div>
+                    <div class="timeline-content">
+                        <h4>果树修剪</h4>
+                        <p>赵县传统梨园采用古法修剪技艺，专业技术人员对30年树龄的老梨树进行修剪，去除病枝、弱枝，保留健壮的结果枝，确保通风透光，为优质果实打下基础。</p>
+                        <img src="https://p9-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/code_assistant/1ebc60012ec149eb9a2ba11403e9756f~tplv-a9rns2rl98-image.image?rk3s=8e244e95&amp;rrcfp=2609e108&amp;x-expires=1752808606&amp;x-signature=lIB%2BEWwN7JCu%2FaqOL4moOEhwWMQ%3D" alt="果树修剪">
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2023-04-05</div>
+                    <div class="timeline-content">
+                        <h4>花期管理</h4>
+                        <p>梨花盛开期，进行人工授粉，提高坐果率。同时，安装防虫网，防止害虫侵害花朵，确保绿色种植标准。赵县雪梨花期严格遵循传统农时，确保果实品质。</p>
+                        <img src="https://p9-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/code_assistant/e9cf677d1b8240ba83b8fddc121f9b16~tplv-a9rns2rl98-image.image?rk3s=8e244e95&amp;rrcfp=2609e108&amp;x-expires=1752808635&amp;x-signature=7XZ7MtwygfJs4Frw44TJ9Ho%2BOCs%3D" alt="花期管理">
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2023-05-15</div>
+                    <div class="timeline-content">
+                        <h4>疏果套袋</h4>
+                        <p>根据树势和枝条负载量，进行人工疏果，每枝保留1-2个优质果实。疏果后立即套上专用果袋，防止病虫害和农药残留。赵县雪梨采用双层纸袋，保证果实色泽和口感。</p>
+                        <img src="https://p9-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/code_assistant/7b1c489667304aa49f8a33a4689a090f~tplv-a9rns2rl98-image.image?rk3s=8e244e95&amp;rrcfp=2609e108&amp;x-expires=1752808660&amp;x-signature=hXSCi2IuJpvs2gm0n5oestFqTzE%3D" alt="疏果套袋">
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2023-06-20</div>
+                    <div class="timeline-content">
+                        <h4>灌溉施肥</h4>
+                        <p>采用赵州桥地下水灌溉，同时施用以有机肥为主的肥料，确保雪梨生长所需的养分。定期检测土壤肥力和水分状况。赵县特有的沙质土壤和优质水源造就了雪梨的独特口感。</p>
+                        <img src="https://p9-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/code_assistant/b93c9b019bf44902a05c455e47168ad1~tplv-a9rns2rl98-image.image?rk3s=8e244e95&amp;rrcfp=2609e108&amp;x-expires=1752808720&amp;x-signature=d7VTC6IA8ejJjYkkuN5LZFlO4m8%3D" alt="灌溉施肥">
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2023-07-10</div>
+                    <div class="timeline-content">
+                        <h4>病虫害防治</h4>
+                        <p>采用生物防治方法，释放天敌昆虫，安装诱虫灯，悬挂粘虫板等，全程不使用化学农药，确保雪梨绿色无污染。赵县农业部门建立了严格的病虫害监测体系，保障雪梨品质安全。</p>
+                        <img src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/code_assistant/a1c7e5d77d4d493f828a0ea36d2f2e7a~tplv-a9rns2rl98-image.image?rk3s=8e244e95&amp;rrcfp=2609e108&amp;x-expires=1752808823&amp;x-signature=gArF4VGZMyNfF5WhZxLCOWg%2FISU%3D" alt="病虫害防治">
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2023-09-15</div>
+                    <div class="timeline-content">
+                        <h4>成熟采摘</h4>
+                        <p>专业采摘人员手工采摘，轻拿轻放，避免损伤。采摘后进行初步筛选，去除有瑕疵的果实。赵县雪梨严格按照成熟度标准进行分期采摘，确保每一颗梨都达到最佳口感。</p>
+                        <img src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/code_assistant/665aaeed7cd34477a6cb359ff5008865~tplv-a9rns2rl98-image.image?rk3s=8e244e95&amp;rrcfp=2609e108&amp;x-expires=1752808854&amp;x-signature=ipueOcAFwv1YmsmCfr7RgfYYxPM%3D" alt="成熟采摘">
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2023-09-16</div>
+                    <div class="timeline-content">
+                        <h4>分拣包装</h4>
+                        <p>在现代化分拣车间，根据果实大小、色泽、糖度等指标进行分级。采用环保包装材料，确保雪梨在运输过程中不受损伤。赵县雪梨包装上均印有地理标志保护产品专用标识。</p>
+                        <img src="https://p3-search.byteimg.com/obj/labis/b725c84f2c970fe3748395b08e8a4a4e" alt="分拣包装">
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2023-09-17</div>
+                    <div class="timeline-content">
+                        <h4>质量检测</h4>
+                        <p>送往第三方检测机构进行检测，检测项目包括农药残留、重金属含量、营养成分等。检测结果均符合地理标志保护产品标准。赵县雪梨特有脆、甜、多汁的特点得到专业认证。</p>
+                        <img src="https://p3-search.byteimg.com/obj/labis/d7426354bc45fc9f73c616d07721acd5" alt="质量检测">
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2023-09-18</div>
+                    <div class="timeline-content">
+                        <h4>冷链运输</h4>
+                        <p>采用全程冷链运输，温度控制在0-5℃，确保雪梨新鲜度和口感。运输过程中实时监控温度和湿度，确保产品质量稳定。赵县雪梨通过专业冷链物流网络，快速送达全国各地。</p>
+                        <img src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/code_assistant/9bf672523edd4c7f8330643bd170be5b~tplv-a9rns2rl98-image.image?rk3s=8e244e95&amp;rrcfp=2609e108&amp;x-expires=1752808939&amp;x-signature=KEVedCUsstPLLPur3KD1oeSqQmo%3D" alt="冷链运输">
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">2023-09-20</div>
+                    <div class="timeline-content">
+                        <h4>入库存储</h4>
+                        <p>存入恒温恒湿仓库，温度控制在2-4℃，相对湿度控制在85-90%。定期检查库存产品，确保品质稳定。赵县建有大型现代化冷库，可储存大量雪梨，保证市场供应的稳定性。</p>
+                        <img src="https://p9-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/code_assistant/78fa9497d6eb4723964efd88b79e1a94~tplv-a9rns2rl98-image.image?rk3s=8e244e95&amp;rrcfp=2609e108&amp;x-expires=1752808961&amp;x-signature=qpRnRcp9q9sdHNUC27YJkSeX888%3D" alt="入库存储">
+                    </div></div></div></div></main></body></html>
